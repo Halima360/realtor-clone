@@ -18,7 +18,7 @@ if(route === Location.pathname){
             </div>
             <div>
                 <ul className='flex space-x-10'>
-                    <li onClick={()=>Navigate("/")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
+                    <li onClick={()=>Navigate("/ ")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
                     border-b-[3px] border-b-transparent ${PathMathRoute("/") && " text-black border-b-red-500"}`}>Home</li>
                     <li onClick={()=>Navigate("/Offer")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
                     border-b-[3px] border-b-transparent ${PathMathRoute("/Offer") && " text-black border-b-red-500"}`}>Offers</li>
