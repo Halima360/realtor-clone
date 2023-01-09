@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import {  Link,  useNavigate } from 'react-router-dom';
 import OAuth from '../components/oAuth';
+import { signInWithEmailAndPassword,  getAuth } from 'firebase/auth';
 export default function SignIn() {
     const [formData, setFormData] = useState({email:"", password:""})
     const [showPassword, setShowPassword] = useState(false)
     const {email, password} = formData;
+    const navigate = useNavigate()
     function onChange(e){
         setFormData((prevState) =>({
             ...prevState,
             [e.target.id] : e.target.value
         }))
+    }
+    
+    async function onSubmit(e){
+        e.preventDefault()
+        try {
+           const auth = getAuth() 
+           const usercredentials = await signInWithEmailAndPassword(auth,email, password)
+           if(usercredentials.user){
+            navigate("/")
+           }
+        } catch (error) {
+            
+        }
     }
   return (
     
@@ -21,7 +36,7 @@ export default function SignIn() {
             <img className='w-full rounded' src='https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357' alt='signin-image'/>
         </div>
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-            <form >
+            <form onSubmit={onSubmit} >
                 <input className='w-full mb-6 px-4 py-2 text-xl text-gray-700
                  bg-white border-gray-300 rounded transition ease-in-out' 
                  type="email" id='email' value={email} onChange={onChange} placeholder="Email address"/>
