@@ -3,6 +3,7 @@ import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai';
 import {  Link,  useNavigate } from 'react-router-dom';
 import OAuth from '../components/oAuth';
 import { signInWithEmailAndPassword,  getAuth } from 'firebase/auth';
+import { toast } from 'react-toastify';
 export default function SignIn() {
     const [formData, setFormData] = useState({email:"", password:""})
     const [showPassword, setShowPassword] = useState(false)
@@ -24,7 +25,7 @@ export default function SignIn() {
             navigate("/")
            }
         } catch (error) {
-            
+           toast.error("Sign in failed") 
         }
     }
   return (
