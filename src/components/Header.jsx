@@ -1,10 +1,23 @@
-import React from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
+    const [pageState, setPageState] = useState("Sign in");
     const Location = useLocation()
     const Navigate = useNavigate()
-    function PathMathRoute(route){
+    const auth = getAuth()
+    useEffect(()=>{
+onAuthStateChanged( auth, (user) =>{
+    if(user){
+        setPageState("Profile")
+    }
+    else{
+        setPageState("Sign in")
+    }
+})
+    },[auth])
+    function PathMatchRoute(route){
 if(route === Location.pathname){
     return true
 }
@@ -19,11 +32,11 @@ if(route === Location.pathname){
             <div>
                 <ul className='flex space-x-10'>
                     <li onClick={()=>Navigate("/ ")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
-                    border-b-[3px] border-b-transparent ${PathMathRoute("/") && " text-black border-b-red-500"}`}>Home</li>
+                    border-b-[3px] border-b-transparent ${PathMatchRoute("/") && " text-black border-b-red-500"}`}>Home</li>
                     <li onClick={()=>Navigate("/Offer")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
-                    border-b-[3px] border-b-transparent ${PathMathRoute("/Offer") && " text-black border-b-red-500"}`}>Offers</li>
-                    <li onClick={()=>Navigate("/Signin")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
-                    border-b-[3px] border-b-transparent ${PathMathRoute("/Signin") && " text-black border-b-red-500"}`}>Sign in</li>
+                    border-b-[3px] border-b-transparent ${PathMatchRoute("/Offer") && " text-black border-b-red-500"}`}>Offers</li>
+                    <li onClick={()=>Navigate("/profile")} className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 
+                    border-b-[3px] border-b-transparent ${(PathMatchRoute("/Signin") || PathMatchRoute("/profile")) && " text-black border-b-red-500"}`}>{pageState}</li>
                 </ul>
             </div>
         </header>
