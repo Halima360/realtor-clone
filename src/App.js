@@ -23,11 +23,14 @@ function App() {
           <Route path='/profile' element={<Profile />}/>
           </Route>
         <Route path='/Offer' element={<Offers/>}/>
-        <Route path='/create-listing' element={<CreateListing/>}/>
+        
         <Route path='/Signin' element={<SignIn/>}/>
         <Route path='/Signup' element={<SignUp/>}/>
         
         <Route path='/Forgotpassword' element={<ForgotPassword/>}/>
+        <Route path='/create-listing' element={<PrivateRoute/>}>
+        <Route path='/create-listing' element={<CreateListing/>}/>
+          </Route>
       </Routes>
      </Router>
      
